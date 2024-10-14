@@ -11,3 +11,14 @@ Content-Type: application/json
     "password": "salainen"
 
 }
+
+###POST 'Username and password are required' 
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+    "username": "",
+    "name": "",
+    "password": ""
+
+}

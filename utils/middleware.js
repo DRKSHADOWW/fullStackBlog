@@ -1,5 +1,5 @@
 const logger = require('./logger')
-const ywt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 
 const requestLogger = (request, response, next) => {
     logger.info('Method:', request.method)
@@ -25,10 +25,8 @@ const requestLogger = (request, response, next) => {
     } else if (error.name ===  'JsonWebTokenError') {
       return response.status(401).json({ error: 'token invalid' })
     } else if (error.name === 'TokenExpiredError') {
-      return response.status(401).json({
-        error: 'token expired'
-      })
-    }
+      return response.status(401).json({error: 'token expired'})
+    } 
   
     next(error)
   }
@@ -41,7 +39,7 @@ const requestLogger = (request, response, next) => {
         request.token = authorization.substring(7)
       }
 
-      const decodedToken = ywt.verify(request.token, process.env.SECRET)
+      const decodedToken = jwt.verify(request.token, process.env.SECRET)
       if(!decodedToken.id  || !request.token){
         return response.status(401).json({ error: 'token invalid' })
       }

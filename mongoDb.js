@@ -8,3 +8,7 @@ mongoose.connect(config.TEST_mongoUrl)
   .catch((err) => {
     console.error('Error connecting to MongoDB:', err);
   })
+  
+  process.on('uncaughtException', () => {
+    mongoose.connection.close()
+  })
